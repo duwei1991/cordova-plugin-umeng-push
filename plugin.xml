@@ -37,8 +37,8 @@
 		<source-file src="src/ios/AppDelegate+UmengPush.m" />
 
 		<!-- umeng push -->
-		<header-file src="src/ios/libs/UMessage_Sdk_1.2.2/UMessage.h" />
-		<source-file src="src/ios/libs/UMessage_Sdk_1.2.2/libUMessage_Sdk_1.2.2.a" framework="true" />
+		<header-file src="src/ios/libs/UMessage_Sdk_1.2.6/UMessage.h" />
+		<source-file src="src/ios/libs/UMessage_Sdk_1.2.6/libUMessage_Sdk_1.2.6.a" framework="true" />
 
 		<!-- other required frameworks -->
 		<framework src="libz.dylib" />
