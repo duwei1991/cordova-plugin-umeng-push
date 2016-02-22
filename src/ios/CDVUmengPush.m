@@ -8,9 +8,13 @@
 #import "CDVUmengPush.h"
 #import "UMessage.h"
 
+
 #define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-@implementation CDVUmengPush
+@implementation CDVUmengPush{
+    CDVInvokedUrlCommand * deviceTokenCommand;
+    NSString * deviceToken;
+}
 
 #pragma mark Initialization
 - (void)pluginInitialize
@@ -25,11 +29,13 @@
                            					selector:@selector(applicationDidFinishLaunching:)
                                					name:UIApplicationDidFinishLaunchingNotification
                              				  object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceiveDeviceToken:) name:CDVRemoteNotification object:nil];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
 	NSDictionary *launchOptions = [notification userInfo];
+    NSLog(@"%@",launchOptions);
 	if (self.umengPushAppId)
 	{
         [UMessage startWithAppkey:self.umengPushAppId launchOptions:launchOptions];
@@ -209,6 +215,30 @@
 					[self failWithCallbackId:command.callbackId withError:error];
 				}
 			}];
+}
+
+-(void)getDeviceToken:(CDVInvokedUrlCommand *)command
+{
+    deviceTokenCommand = command;
+    if(deviceToken){
+        [self sendDeviceToken:deviceToken];
+    }
+}
+
+-(void)sendDeviceToken:(NSString *)token
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                      messageAsString:token];
+    if(deviceTokenCommand){
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:deviceTokenCommand.callbackId];
+    }
+}
+
+-(void)onReceiveDeviceToken:(NSNotification *)notification
+{
+    deviceToken = [notification object];
+    [self sendDeviceToken:deviceToken];
+    
 }
 
 #pragma mark Helper Function
