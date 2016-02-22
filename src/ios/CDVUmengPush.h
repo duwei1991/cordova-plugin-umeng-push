@@ -33,4 +33,7 @@ typedef NS_ENUM(NSInteger, kAliasType)
 - (void)setAlias:(CDVInvokedUrlCommand *)command;
 - (void)removeAlias:(CDVInvokedUrlCommand *)command;
 
+- (void)getDeviceToken:(CDVInvokedUrlCommand *)command;
+- (void)onReceiveDeviceToken:(NSString *)token;
+
 @end
