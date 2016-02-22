@@ -50,6 +50,10 @@ module.exports = {
 
 	removeAlias: function (alias, type, successCallback, errorCallback) {
 		exec(successCallback, errorCallback, "UmengPush", "removeAlias", [alias, type]);
+	},
+
+	getDeviceToken: function (successCallback, errorCallback) {
+		exec(successCallback, errorCallback, "UmengPush", "getDeviceToken", []);
 	}
 
 	// setLocation:
